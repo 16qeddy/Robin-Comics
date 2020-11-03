@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: [
@@ -10,6 +11,13 @@ module.exports = {
     filename: 'bundle.js'
   },
 
+  plugins: [
+    new CopyPlugin({
+      patterns: [
+        { from: './src/index.html' },
+      ],
+    }),
+  ],
 
   module: {
     rules: [
