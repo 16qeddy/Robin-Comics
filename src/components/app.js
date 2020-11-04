@@ -4,7 +4,9 @@ import ReactDOM from "react-dom";
 import { Button, Card, Navbar, Nav, NavDropdown, FormControl, Form, Spinner } from 'react-bootstrap';
 import '../styles/app.css';
 import SeriesCard from './seriesCard.js';
-
+import SeriesView from './seriesView.js';
+import SearchNav from './searchNav.js';
+import ChapterView from './chapterView.js';
 class App extends Component {
   constructor() {
     super();
@@ -13,7 +15,8 @@ class App extends Component {
       comicList: [],
       loading: false,
       search: '',
-      series: null
+      series: null,
+      chapter: null
     };
     this.toggleLoading = this.toggleLoading.bind(this);
     this.getComics = this.getComics.bind(this);
@@ -21,6 +24,7 @@ class App extends Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.seriesOnClick = this.seriesOnClick.bind(this);
     this.goHome = this.goHome.bind(this);
+    this.chapterClick = this.chapterClick.bind(this);
   }
 
   componentDidMount() {
@@ -55,7 +59,8 @@ class App extends Component {
   onSubmit() {
     this.getComics(this.state.search);
     this.setState({
-      search: ''
+      search: '',
+      series: null
     })
   }
 
@@ -73,7 +78,39 @@ class App extends Component {
     })
   }
 
+  chapterClick(chapterURL) {
+    this.toggleLoading();
+    axios.get(chapterURL)
+      .then(data => {
+        this.setState({
+          chapter: data.data
+        })
+      })
+      .then(() => {
+        this.toggleLoading();
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }
+
   render() {
+    if (this.state.chapter) {
+      return (
+        <>
+          <SearchNav onSubmit={this.onSubmit} searchOnChange={this.searchOnChange} goHome={this.goHome} />
+          <ChapterView chapter={this.state.chapter} />
+        </>
+      )
+    }
+    if (this.state.series) {
+      return (
+        <>
+          <SearchNav onSubmit={this.onSubmit} searchOnChange={this.searchOnChange} goHome={this.goHome} />
+          <SeriesView handler={this.chapterClick} series={this.state.series} />
+        </>
+      )
+    }
     if (this.state.loading) {
       return (
         <div className="loadingFrame">
@@ -92,19 +129,7 @@ class App extends Component {
     }
     return (
       <div className="yellowText AppContainer">
-        <Navbar bg="danger" expand="lg">
-          <Navbar.Brand className="yellowText" href="#home">Robin Comics</Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="mr-auto">
-              <Nav.Link onClick={this.goHome} href="#home">Home</Nav.Link>
-            </Nav>
-            <Form inline>
-              <FormControl onChange={this.searchOnChange} type="text" placeholder="Search" className="mr-sm-2" />
-              <Button onClick={this.onSubmit} className="test" variant="dark">Search</Button>
-            </Form>
-          </Navbar.Collapse>
-        </Navbar>
+        <SearchNav onSubmit={this.onSubmit} searchOnChange={this.searchOnChange} goHome={this.goHome} />
         <div className="comicSpace">
           <div className="sides"></div>
           <div className="center">

@@ -1,0 +1,7 @@
+.infoContainer{
+  justify-content: flex-end;
+}
+
+.flex{
+  display: flex;
+}
