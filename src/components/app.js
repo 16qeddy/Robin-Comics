@@ -61,7 +61,8 @@ class App extends Component {
     this.getComics(this.state.search);
     this.setState({
       search: '',
-      series: null
+      series: null,
+      chapter: null
     })
   }
 
@@ -110,22 +111,6 @@ class App extends Component {
   }
 
   render() {
-    if (this.state.chapter) {
-      return (
-        <>
-          <SearchNav onSubmit={this.onSubmit} searchOnChange={this.searchOnChange} goHome={this.goHome} goBack={this.goBack} />
-          <ChapterView chapter={this.state.chapter} />
-        </>
-      )
-    }
-    if (this.state.series) {
-      return (
-        <>
-          <SearchNav onSubmit={this.onSubmit} searchOnChange={this.searchOnChange} goHome={this.goHome} goBack={this.goBack} />
-          <SeriesView handler={this.chapterClick} series={this.state.series} />
-        </>
-      )
-    }
     if (this.state.loading) {
       return (
         <div className="loadingFrame">
@@ -140,6 +125,22 @@ class App extends Component {
           </div>
           <div className="top"></div>
         </div>
+      )
+    }
+    if (this.state.chapter) {
+      return (
+        <>
+          <SearchNav onSubmit={this.onSubmit} searchOnChange={this.searchOnChange} goHome={this.goHome} goBack={this.goBack} />
+          <ChapterView chapter={this.state.chapter} />
+        </>
+      )
+    }
+    if (this.state.series) {
+      return (
+        <>
+          <SearchNav onSubmit={this.onSubmit} searchOnChange={this.searchOnChange} goHome={this.goHome} goBack={this.goBack} />
+          <SeriesView handler={this.chapterClick} series={this.state.series} />
+        </>
       )
     }
     return (
