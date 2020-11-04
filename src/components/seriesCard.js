@@ -10,9 +10,6 @@ let SeriesCard = (props) => {
         <Card.Img variant="top" src={props.series.image} />
         <Card.Body className="cardTextArea">
           <Card.Title>{props.series.title}</Card.Title>
-          <Card.Text >
-            {props.series.description}
-          </Card.Text>
         </Card.Body>
       </Card>
     </div>

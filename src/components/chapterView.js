@@ -6,9 +6,9 @@ let ChapterView = (props) => {
 
   return (
     <div className="chapters">
-      <Carousel data-interval="false">
+      <Carousel >
         {props.chapter.map((page) => {
-          return (<Carousel.Item>
+          return (<Carousel.Item interval={10000000}>
             <img className="image" src={page.image}></img>
           </Carousel.Item>)
         })}

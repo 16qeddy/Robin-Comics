@@ -6,9 +6,12 @@ let SearchNav = (props) => {
 
   return (
     <Navbar bg="danger" expand="lg">
-      <Navbar.Brand className="yellowText" href="#home">Robin Comics</Navbar.Brand>
+      <Navbar.Brand className="yellowText" href="#home" onClick={props.goHome}>Robin Comics</Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
+        <Nav className="mr-auto">
+          <Nav.Link onClick={props.goBack} href="#back">Back</Nav.Link>
+        </Nav>
         <Nav className="mr-auto">
           <Nav.Link onClick={props.goHome} href="#home">Home</Nav.Link>
         </Nav>

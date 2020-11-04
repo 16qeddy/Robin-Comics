@@ -25,6 +25,7 @@ class App extends Component {
     this.seriesOnClick = this.seriesOnClick.bind(this);
     this.goHome = this.goHome.bind(this);
     this.chapterClick = this.chapterClick.bind(this);
+    this.goBack = this.goBack.bind(this);
   }
 
   componentDidMount() {
@@ -74,7 +75,8 @@ class App extends Component {
     this.setState({
       loading: false,
       search: '',
-      series: null
+      series: null,
+      chapter: null
     })
   }
 
@@ -94,11 +96,24 @@ class App extends Component {
       })
   }
 
+  goBack() {
+    if (this.state.chapter) {
+      this.setState({
+        chapter: null
+      })
+    }
+    else if (this.state.series) {
+      this.setState({
+        series: null
+      })
+    }
+  }
+
   render() {
     if (this.state.chapter) {
       return (
         <>
-          <SearchNav onSubmit={this.onSubmit} searchOnChange={this.searchOnChange} goHome={this.goHome} />
+          <SearchNav onSubmit={this.onSubmit} searchOnChange={this.searchOnChange} goHome={this.goHome} goBack={this.goBack} />
           <ChapterView chapter={this.state.chapter} />
         </>
       )
@@ -106,7 +121,7 @@ class App extends Component {
     if (this.state.series) {
       return (
         <>
-          <SearchNav onSubmit={this.onSubmit} searchOnChange={this.searchOnChange} goHome={this.goHome} />
+          <SearchNav onSubmit={this.onSubmit} searchOnChange={this.searchOnChange} goHome={this.goHome} goBack={this.goBack} />
           <SeriesView handler={this.chapterClick} series={this.state.series} />
         </>
       )
@@ -129,7 +144,7 @@ class App extends Component {
     }
     return (
       <div className="yellowText AppContainer">
-        <SearchNav onSubmit={this.onSubmit} searchOnChange={this.searchOnChange} goHome={this.goHome} />
+        <SearchNav onSubmit={this.onSubmit} searchOnChange={this.searchOnChange} goHome={this.goHome} goBack={this.goBack} />
         <div className="comicSpace">
           <div className="sides"></div>
           <div className="center">

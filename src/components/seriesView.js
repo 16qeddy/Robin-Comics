@@ -43,7 +43,7 @@ let SeriesView = (props) => {
           <Row>
             <Col>
               {props.series.chapters.map((comic) => {
-                return (<div onClick={function () { props.handler(comic.url) }} key={comic.title}>{comic.title}</div>)
+                return (<div className="chapterLink" onClick={function () { props.handler(comic.url) }} key={comic.title}>{comic.title}</div>)
               })}
             </Col>
           </Row>
